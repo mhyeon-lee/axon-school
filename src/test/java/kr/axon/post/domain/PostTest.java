@@ -38,6 +38,7 @@ public class PostTest {
         this.fixture.registerAnnotatedCommandHandler(
                 new PostCommandHandler(fixture.getRepository())
         );
+        this.fixture.setReportIllegalStateChange(true);
     }
 
     @Test

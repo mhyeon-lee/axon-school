@@ -40,7 +40,7 @@ public class Post extends AbstractAnnotatedAggregateRoot {
     }
 
     @EventSourcingHandler
-    public void applyPostCreation(PostCreatedEvent event) {
+    protected void applyPostCreation(PostCreatedEvent event) {
         CreatePostCommand command = event.getPostCreatedCommand();
         this.postId = command.getPostId();
         this.title = command.getTitle();
@@ -48,14 +48,14 @@ public class Post extends AbstractAnnotatedAggregateRoot {
     }
 
     @EventSourcingHandler
-    public void applyPostModification(PostModifiedEvent event) {
+    protected void applyPostModification(PostModifiedEvent event) {
         ModifyPostCommand command = event.getModifyPostCommand();
         this.title = command.getTitle();
         this.content = command.getTitle();
     }
 
     @EventSourcingHandler
-    public void applyPostDeletition(PostDeletedEvent event) {
+    protected void applyPostDeletition(PostDeletedEvent event) {
         markDeleted();
     }
 
@@ -65,7 +65,7 @@ public class Post extends AbstractAnnotatedAggregateRoot {
     }
 
     @Override
-    protected Collection<Post> getChildEntities() {
+    public Collection<Post> getChildEntities() {
         return Collections.EMPTY_LIST;
     }
 }
