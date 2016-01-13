@@ -10,6 +10,7 @@ import java.io.Serializable;
 @EqualsAndHashCode
 @ToString
 public class PostIdentifier implements Serializable {
+    private static final long serialVersionUID = -7106184259025268531L;
 
     private String identifier;
 
