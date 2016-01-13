@@ -26,13 +26,13 @@ public class PostCommandHandler {
 
     @CommandHandler
     public void handle(ModifyPostCommand command) {
-        Post post = repository.load(command.getPostIdentifier());
+        Post post = repository.load(command.getId());
         post.modify(command);
     }
 
     @CommandHandler
     public void handle(DeletePostCommand command) {
-        Post post = repository.load(command.getPostIdentifier());
+        Post post = repository.load(command.getId());
         if (!post.isDeleted()) {
             post.delete(command);
         }

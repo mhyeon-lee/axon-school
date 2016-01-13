@@ -2,6 +2,7 @@ package kr.axon.post.domain;
 
 import kr.axon.post.command.api.PostEvent;
 import kr.axon.post.command.domain.Post;
+import kr.axon.post.command.domain.PostContent;
 import kr.axon.post.command.domain.PostIdentifier;
 import kr.axon.post.command.handler.PostCommandHandler;
 import org.axonframework.test.FixtureConfiguration;
@@ -17,19 +18,18 @@ public class PostTest {
 
     private FixtureConfiguration fixture;
 
-    final PostIdentifier POST_IDENTIFIER = new PostIdentifier();
+    final PostIdentifier ID = new PostIdentifier();
+    final PostContent CONTENT = new PostContent("title", "content");
 
-    final CreatePostCommand createPostCommand = new CreatePostCommand(POST_IDENTIFIER, "title", "content");
+    final CreatePostCommand createPostCommand = new CreatePostCommand(ID, CONTENT);
     final PostCreatedEvent postCreatedEvent = new PostCreatedEvent(createPostCommand);
 
     final ModifyPostCommand modifyPostCommand = new ModifyPostCommand(
-            POST_IDENTIFIER,
-            "modified title",
-            "modified content"
+            ID, new PostContent("modified title", "modified content")
     );
     final PostModifiedEvent postModifiedEvent = new PostModifiedEvent(modifyPostCommand);
 
-    final DeletePostCommand deletePostCommand = new DeletePostCommand(POST_IDENTIFIER);
+    final DeletePostCommand deletePostCommand = new DeletePostCommand(ID);
     final PostEvent.PostDeletedEvent postDeletedEvent = new PostEvent.PostDeletedEvent(deletePostCommand);
 
     @Before

@@ -1,5 +1,6 @@
 package kr.axon.post.command.api;
 
+import kr.axon.post.command.domain.PostContent;
 import kr.axon.post.command.domain.PostIdentifier;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -10,24 +11,22 @@ public class PostCommand {
     @Getter
     @AllArgsConstructor
     public static class CreatePostCommand {
-        private PostIdentifier postIdentifier;
-        private String title;
-        private String content;
+        private PostIdentifier id;
+        private PostContent content;
     }
 
     @Getter
     @AllArgsConstructor
     public static class ModifyPostCommand {
         @TargetAggregateIdentifier
-        private PostIdentifier postIdentifier;
-        private String title;
-        private String content;
+        private PostIdentifier id;
+        private PostContent content;
     }
 
     @Getter
     @AllArgsConstructor
     public static class DeletePostCommand {
         @TargetAggregateIdentifier
-        private PostIdentifier postIdentifier;
+        private PostIdentifier id;
     }
 }

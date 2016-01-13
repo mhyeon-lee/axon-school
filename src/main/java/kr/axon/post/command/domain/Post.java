@@ -15,11 +15,8 @@ import static kr.axon.post.command.api.PostEvent.*;
 public class Post extends AbstractAnnotatedAggregateRoot {
 
     @AggregateIdentifier
-    private PostIdentifier postIdentifier;
-
-    private String title;
-
-    private String content;
+    private PostIdentifier id;
+    private PostContent content;
 
     protected Post() {
 
@@ -40,16 +37,14 @@ public class Post extends AbstractAnnotatedAggregateRoot {
     @EventSourcingHandler
     protected void applyPostCreation(PostCreatedEvent event) {
         CreatePostCommand command = event.getPostCreatedCommand();
-        this.postIdentifier = command.getPostIdentifier();
-        this.title = command.getTitle();
+        this.id = command.getId();
         this.content = command.getContent();
     }
 
     @EventSourcingHandler
     protected void applyPostModification(PostModifiedEvent event) {
         ModifyPostCommand command = event.getModifyPostCommand();
-        this.title = command.getTitle();
-        this.content = command.getTitle();
+        this.content = command.getContent();
     }
 
     @EventSourcingHandler
@@ -59,7 +54,7 @@ public class Post extends AbstractAnnotatedAggregateRoot {
 
     @Override
     public PostIdentifier getIdentifier() {
-        return this.postIdentifier;
+        return this.id;
     }
 
     @Override
