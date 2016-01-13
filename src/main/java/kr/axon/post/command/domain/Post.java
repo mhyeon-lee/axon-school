@@ -1,7 +1,6 @@
 package kr.axon.post.command.domain;
 
 import kr.axon.post.command.api.PostCommand.DeletePostCommand;
-import lombok.extern.slf4j.Slf4j;
 import org.axonframework.eventsourcing.annotation.AbstractAnnotatedAggregateRoot;
 import org.axonframework.eventsourcing.annotation.AggregateIdentifier;
 import org.axonframework.eventsourcing.annotation.EventSourcingHandler;
@@ -13,7 +12,6 @@ import static kr.axon.post.command.api.PostCommand.CreatePostCommand;
 import static kr.axon.post.command.api.PostCommand.ModifyPostCommand;
 import static kr.axon.post.command.api.PostEvent.*;
 
-@Slf4j
 public class Post extends AbstractAnnotatedAggregateRoot {
 
     @AggregateIdentifier
