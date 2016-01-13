@@ -2,8 +2,8 @@ package kr.axon.post.domain;
 
 import kr.axon.post.command.api.PostEvent;
 import kr.axon.post.command.domain.Post;
+import kr.axon.post.command.domain.PostIdentifier;
 import kr.axon.post.command.handler.PostCommandHandler;
-import org.axonframework.domain.IdentifierFactory;
 import org.axonframework.test.FixtureConfiguration;
 import org.axonframework.test.Fixtures;
 import org.junit.Before;
@@ -17,19 +17,19 @@ public class PostTest {
 
     private FixtureConfiguration fixture;
 
-    final String POST_ID = IdentifierFactory.getInstance().generateIdentifier();
+    final PostIdentifier POST_IDENTIFIER = new PostIdentifier();
 
-    final CreatePostCommand createPostCommand = new CreatePostCommand(POST_ID, "title", "content");
+    final CreatePostCommand createPostCommand = new CreatePostCommand(POST_IDENTIFIER, "title", "content");
     final PostCreatedEvent postCreatedEvent = new PostCreatedEvent(createPostCommand);
 
     final ModifyPostCommand modifyPostCommand = new ModifyPostCommand(
-            POST_ID,
+            POST_IDENTIFIER,
             "modified title",
             "modified content"
     );
     final PostModifiedEvent postModifiedEvent = new PostModifiedEvent(modifyPostCommand);
 
-    final DeletePostCommand deletePostCommand = new DeletePostCommand(POST_ID);
+    final DeletePostCommand deletePostCommand = new DeletePostCommand(POST_IDENTIFIER);
     final PostEvent.PostDeletedEvent postDeletedEvent = new PostEvent.PostDeletedEvent(deletePostCommand);
 
     @Before
