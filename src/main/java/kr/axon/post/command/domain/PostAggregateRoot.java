@@ -34,20 +34,20 @@ public class PostAggregateRoot extends AbstractAnnotatedAggregateRoot {
     }
 
     @EventSourcingHandler
-    protected void applyPostCreation(PostCreatedEvent event) {
+    private void applyPostCreation(PostCreatedEvent event) {
         CreatePostCommand command = event.getPostCreatedCommand();
         this.id = command.getId();
         this.content = command.getContent();
     }
 
     @EventSourcingHandler
-    protected void applyPostModification(PostModifiedEvent event) {
+    private void applyPostModification(PostModifiedEvent event) {
         ModifyPostCommand command = event.getModifyPostCommand();
         this.content = command.getContent();
     }
 
     @EventSourcingHandler
-    protected void applyPostDeletion(PostDeletedEvent event) {
+    private void applyPostDeletion(PostDeletedEvent event) {
         markDeleted();
     }
 
