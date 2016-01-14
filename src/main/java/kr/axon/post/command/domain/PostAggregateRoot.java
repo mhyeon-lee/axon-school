@@ -29,7 +29,7 @@ public class PostAggregateRoot extends AbstractAnnotatedAggregateRoot {
     }
 
     public void delete(DeletePostCommand command) {
-        apply(new PostDeletedEvent(command));
+        apply(new PostDeletedEvent(command.getId()));
     }
 
     @EventSourcingHandler

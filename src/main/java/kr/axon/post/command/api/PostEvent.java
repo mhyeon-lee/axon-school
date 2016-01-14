@@ -1,5 +1,6 @@
 package kr.axon.post.command.api;
 
+import kr.axon.post.command.domain.PostIdentifier;
 import lombok.Value;
 
 import static kr.axon.post.command.api.PostCommand.*;
@@ -18,6 +19,6 @@ public class PostEvent {
 
     @Value
     public static class PostDeletedEvent {
-        private final DeletePostCommand deletePostCommand;
+        private final PostIdentifier id;
     }
 }

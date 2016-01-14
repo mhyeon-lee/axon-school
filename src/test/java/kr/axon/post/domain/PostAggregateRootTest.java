@@ -30,7 +30,8 @@ public class PostAggregateRootTest {
     final PostModifiedEvent postModifiedEvent = new PostModifiedEvent(modifyPostCommand);
 
     final DeletePostCommand deletePostCommand = new DeletePostCommand(ID);
-    final PostEvent.PostDeletedEvent postDeletedEvent = new PostEvent.PostDeletedEvent(deletePostCommand);
+    final PostEvent.PostDeletedEvent postDeletedEvent
+            = new PostEvent.PostDeletedEvent(deletePostCommand.getId());
 
     @Before
     public void setUp() throws Exception {
