@@ -1,6 +1,8 @@
 package kr.axon.post.command.domain;
 
 import kr.axon.post.command.api.PostCommand.DeletePostCommand;
+import lombok.AccessLevel;
+import lombok.NoArgsConstructor;
 import org.axonframework.eventsourcing.annotation.AbstractAnnotatedAggregateRoot;
 import org.axonframework.eventsourcing.annotation.AggregateIdentifier;
 import org.axonframework.eventsourcing.annotation.EventSourcingHandler;
@@ -11,15 +13,12 @@ import java.util.Collections;
 import static kr.axon.post.command.api.PostCommand.*;
 import static kr.axon.post.command.api.PostEvent.*;
 
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class PostAggregateRoot extends AbstractAnnotatedAggregateRoot {
 
     @AggregateIdentifier
     private PostIdentifier id;
     private PostContent content;
-
-    protected PostAggregateRoot() {
-
-    }
 
     public PostAggregateRoot(CreatePostCommand command) {
         apply(new PostCreatedEvent(command));
