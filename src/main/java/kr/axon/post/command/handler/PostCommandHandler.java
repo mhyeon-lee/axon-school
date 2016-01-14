@@ -1,6 +1,6 @@
 package kr.axon.post.command.handler;
 
-import kr.axon.post.command.domain.Post;
+import kr.axon.post.command.domain.PostAggregateRoot;
 import org.axonframework.commandhandling.annotation.CommandHandler;
 import org.axonframework.repository.Repository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,7 +11,7 @@ import static kr.axon.post.command.api.PostCommand.*;
 @Component
 public class PostCommandHandler {
 
-    private final Repository<Post> eventSourcingRepository;
+    private final Repository<PostAggregateRoot> eventSourcingRepository;
 
     @Autowired
     public PostCommandHandler(Repository eventSourcingRepository) {
@@ -20,21 +20,21 @@ public class PostCommandHandler {
 
     @CommandHandler
     public void handler(CreatePostCommand command) {
-        Post post = new Post(command);
-        eventSourcingRepository.add(post);
+        PostAggregateRoot postAggregateRoot = new PostAggregateRoot(command);
+        eventSourcingRepository.add(postAggregateRoot);
     }
 
     @CommandHandler
     public void handle(ModifyPostCommand command) {
-        Post post = eventSourcingRepository.load(command.getId());
-        post.modify(command);
+        PostAggregateRoot postAggregateRoot = eventSourcingRepository.load(command.getId());
+        postAggregateRoot.modify(command);
     }
 
     @CommandHandler
     public void handle(DeletePostCommand command) {
-        Post post = eventSourcingRepository.load(command.getId());
-        if (!post.isDeleted()) {
-            post.delete(command);
+        PostAggregateRoot postAggregateRoot = eventSourcingRepository.load(command.getId());
+        if (!postAggregateRoot.isDeleted()) {
+            postAggregateRoot.delete(command);
         }
     }
 }

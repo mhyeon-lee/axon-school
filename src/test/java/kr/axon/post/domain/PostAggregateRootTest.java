@@ -1,7 +1,7 @@
 package kr.axon.post.domain;
 
 import kr.axon.post.command.api.PostEvent;
-import kr.axon.post.command.domain.Post;
+import kr.axon.post.command.domain.PostAggregateRoot;
 import kr.axon.post.command.domain.PostContent;
 import kr.axon.post.command.domain.PostIdentifier;
 import kr.axon.post.command.handler.PostCommandHandler;
@@ -14,7 +14,7 @@ import static kr.axon.post.command.api.PostCommand.*;
 import static kr.axon.post.command.api.PostEvent.PostCreatedEvent;
 import static kr.axon.post.command.api.PostEvent.PostModifiedEvent;
 
-public class PostTest {
+public class PostAggregateRootTest {
 
     private FixtureConfiguration fixture;
 
@@ -34,7 +34,7 @@ public class PostTest {
 
     @Before
     public void setUp() throws Exception {
-        this.fixture = Fixtures.newGivenWhenThenFixture(Post.class);
+        this.fixture = Fixtures.newGivenWhenThenFixture(PostAggregateRoot.class);
         this.fixture.registerAnnotatedCommandHandler(
                 new PostCommandHandler(fixture.getRepository())
         );

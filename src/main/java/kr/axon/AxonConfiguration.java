@@ -1,6 +1,6 @@
 package kr.axon;
 
-import kr.axon.post.command.domain.Post;
+import kr.axon.post.command.domain.PostAggregateRoot;
 import org.axonframework.commandhandling.CommandBus;
 import org.axonframework.commandhandling.SimpleCommandBus;
 import org.axonframework.commandhandling.gateway.CommandGateway;
@@ -47,7 +47,7 @@ public class AxonConfiguration {
     @Bean
     public EventSourcingRepository eventSourcingRepository() {
         EventSourcingRepository eventSourcingRepository =
-                new EventSourcingRepository(Post.class, eventStore());
+                new EventSourcingRepository(PostAggregateRoot.class, eventStore());
         eventSourcingRepository.setEventBus(eventBus());
         return eventSourcingRepository;
     }

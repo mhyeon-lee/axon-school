@@ -11,17 +11,17 @@ import java.util.Collections;
 import static kr.axon.post.command.api.PostCommand.*;
 import static kr.axon.post.command.api.PostEvent.*;
 
-public class Post extends AbstractAnnotatedAggregateRoot {
+public class PostAggregateRoot extends AbstractAnnotatedAggregateRoot {
 
     @AggregateIdentifier
     private PostIdentifier id;
     private PostContent content;
 
-    protected Post() {
+    protected PostAggregateRoot() {
 
     }
 
-    public Post(CreatePostCommand command) {
+    public PostAggregateRoot(CreatePostCommand command) {
         apply(new PostCreatedEvent(command));
     }
 
@@ -57,7 +57,7 @@ public class Post extends AbstractAnnotatedAggregateRoot {
     }
 
     @Override
-    public Collection<Post> getChildEntities() {
+    public Collection<PostAggregateRoot> getChildEntities() {
         return Collections.EMPTY_LIST;
     }
 }
