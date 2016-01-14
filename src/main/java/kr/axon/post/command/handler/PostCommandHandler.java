@@ -19,19 +19,19 @@ public class PostCommandHandler {
     }
 
     @CommandHandler
-    public void handler(CreatePostCommand command) {
+    protected void handler(CreatePostCommand command) {
         PostAggregateRoot postAggregateRoot = new PostAggregateRoot(command);
         eventSourcingRepository.add(postAggregateRoot);
     }
 
     @CommandHandler
-    public void handle(ModifyPostCommand command) {
+    protected void handle(ModifyPostCommand command) {
         PostAggregateRoot postAggregateRoot = eventSourcingRepository.load(command.getId());
         postAggregateRoot.modify(command);
     }
 
     @CommandHandler
-    public void handle(DeletePostCommand command) {
+    protected void handle(DeletePostCommand command) {
         PostAggregateRoot postAggregateRoot = eventSourcingRepository.load(command.getId());
         if (!postAggregateRoot.isDeleted()) {
             postAggregateRoot.delete(command);
