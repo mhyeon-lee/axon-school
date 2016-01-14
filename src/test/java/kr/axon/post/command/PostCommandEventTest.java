@@ -1,37 +1,15 @@
 package kr.axon.post.command;
 
-import kr.axon.post.command.api.PostEvent;
 import kr.axon.post.command.domain.PostAggregateRoot;
-import kr.axon.post.command.domain.PostContent;
-import kr.axon.post.command.domain.PostIdentifier;
 import kr.axon.post.command.handler.PostCommandHandler;
 import org.axonframework.test.FixtureConfiguration;
 import org.axonframework.test.Fixtures;
 import org.junit.Before;
 import org.junit.Test;
 
-import static kr.axon.post.command.api.PostCommand.*;
-import static kr.axon.post.command.api.PostEvent.PostCreatedEvent;
-import static kr.axon.post.command.api.PostEvent.PostModifiedEvent;
-
-public class PostCommandEventTest {
+public class PostCommandEventTest extends AbstractPostCommandEventFixture{
 
     private FixtureConfiguration fixture;
-
-    final PostIdentifier ID = new PostIdentifier();
-    final PostContent CONTENT = new PostContent("title", "body");
-
-    final CreatePostCommand createPostCommand = new CreatePostCommand(ID, CONTENT);
-    final PostCreatedEvent postCreatedEvent = new PostCreatedEvent(createPostCommand);
-
-    final ModifyPostCommand modifyPostCommand = new ModifyPostCommand(
-            ID, new PostContent("modified title", "modified body")
-    );
-    final PostModifiedEvent postModifiedEvent = new PostModifiedEvent(modifyPostCommand);
-
-    final DeletePostCommand deletePostCommand = new DeletePostCommand(ID);
-    final PostEvent.PostDeletedEvent postDeletedEvent
-            = new PostEvent.PostDeletedEvent(deletePostCommand.getId());
 
     @Before
     public void setUp() throws Exception {
@@ -39,7 +17,6 @@ public class PostCommandEventTest {
         this.fixture.registerAnnotatedCommandHandler(
                 new PostCommandHandler(fixture.getRepository())
         );
-        this.fixture.setReportIllegalStateChange(true);
     }
 
     @Test
