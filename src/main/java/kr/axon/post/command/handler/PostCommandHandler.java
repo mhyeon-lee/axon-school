@@ -33,8 +33,6 @@ public class PostCommandHandler {
     @CommandHandler
     private void handleDeletePostCommand(DeletePostCommand command) {
         PostAggregateRoot postAggregateRoot = eventSourcingRepository.load(command.getId());
-        if (!postAggregateRoot.isDeleted()) {
-            postAggregateRoot.delete(command);
-        }
+        postAggregateRoot.delete(command);
     }
 }
