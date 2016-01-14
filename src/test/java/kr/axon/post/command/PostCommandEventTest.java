@@ -1,4 +1,4 @@
-package kr.axon.post.domain;
+package kr.axon.post.command;
 
 import kr.axon.post.command.api.PostEvent;
 import kr.axon.post.command.domain.PostAggregateRoot;
@@ -14,7 +14,7 @@ import static kr.axon.post.command.api.PostCommand.*;
 import static kr.axon.post.command.api.PostEvent.PostCreatedEvent;
 import static kr.axon.post.command.api.PostEvent.PostModifiedEvent;
 
-public class PostAggregateRootTest {
+public class PostCommandEventTest {
 
     private FixtureConfiguration fixture;
 
