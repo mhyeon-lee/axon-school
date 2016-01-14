@@ -14,5 +14,5 @@ public class PostContent {
     @Wither
     private String title;
     @Wither
-    private String content;
+    private String body;
 }

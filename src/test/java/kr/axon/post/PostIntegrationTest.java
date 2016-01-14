@@ -33,7 +33,7 @@ public class PostIntegrationTest {
     @Test
     public void createPostCommandTest() {
         // Given
-        final PostContent content = new PostContent("title", "content");
+        final PostContent content = new PostContent("title", "body");
 
         // When
         final PostModel createdPost = createNewPost(content);
@@ -57,9 +57,9 @@ public class PostIntegrationTest {
     @Test
     public void modifyPostCommandTest() {
         // Given
-        final PostModel createdPost = createNewPost(new PostContent("title", "content"));
+        final PostModel createdPost = createNewPost(new PostContent("title", "body"));
         final PostContent modifyContent = createdPost.getContent()
-                .withTitle("modified title").withContent("modified content");
+                .withTitle("modified title").withBody("modified body");
         final ModifyPostCommand modifyPostCommand =
                 new ModifyPostCommand(createdPost.getId(), modifyContent);
 
@@ -77,7 +77,7 @@ public class PostIntegrationTest {
     @Test
     public void deletePostCommandTest() {
         // Given
-        final PostModel createdPost = createNewPost(new PostContent("title", "content"));
+        final PostModel createdPost = createNewPost(new PostContent("title", "body"));
         final DeletePostCommand deletePostCommand = new DeletePostCommand(createdPost.getId());
 
         // When

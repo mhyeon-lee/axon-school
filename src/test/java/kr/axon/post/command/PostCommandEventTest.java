@@ -19,13 +19,13 @@ public class PostCommandEventTest {
     private FixtureConfiguration fixture;
 
     final PostIdentifier ID = new PostIdentifier();
-    final PostContent CONTENT = new PostContent("title", "content");
+    final PostContent CONTENT = new PostContent("title", "body");
 
     final CreatePostCommand createPostCommand = new CreatePostCommand(ID, CONTENT);
     final PostCreatedEvent postCreatedEvent = new PostCreatedEvent(createPostCommand);
 
     final ModifyPostCommand modifyPostCommand = new ModifyPostCommand(
-            ID, new PostContent("modified title", "modified content")
+            ID, new PostContent("modified title", "modified body")
     );
     final PostModifiedEvent postModifiedEvent = new PostModifiedEvent(modifyPostCommand);
 
