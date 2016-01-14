@@ -47,7 +47,7 @@ public class PostAggregateRoot extends AbstractAnnotatedAggregateRoot {
     }
 
     @EventSourcingHandler
-    protected void applyPostDeletition(PostDeletedEvent event) {
+    protected void applyPostDeletion(PostDeletedEvent event) {
         markDeleted();
     }
 
