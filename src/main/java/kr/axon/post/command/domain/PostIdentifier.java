@@ -12,18 +12,18 @@ import java.io.Serializable;
 public class PostIdentifier implements Serializable {
     private static final long serialVersionUID = -7106184259025268531L;
 
-    private String identifier;
+    private String id;
 
     public PostIdentifier() {
-        this.identifier = IdentifierFactory.getInstance().generateIdentifier();
+        this.id = IdentifierFactory.getInstance().generateIdentifier();
     }
 
     public PostIdentifier(String identifier) {
         Assert.notNull(identifier, "Identifier may not be null");
-        this.identifier = identifier;
+        this.id = identifier;
     }
 
     public String toString() {
-        return this.identifier;
+        return this.id;
     }
 }
