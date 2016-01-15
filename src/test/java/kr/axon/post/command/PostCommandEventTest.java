@@ -7,7 +7,7 @@ import org.axonframework.test.Fixtures;
 import org.junit.Before;
 import org.junit.Test;
 
-public class PostCommandEventTest extends AbstractPostCommandEventFixture{
+public class PostCommandEventTest extends AbstractPostCommandEventFixture {
 
     private FixtureConfiguration fixture;
 
@@ -22,21 +22,21 @@ public class PostCommandEventTest extends AbstractPostCommandEventFixture{
     @Test
     public void createPost() throws Exception {
         fixture.given()
-                .when(createPostCommand)
-                .expectEvents(postCreatedEvent);
+                .when(CREATE_POST_COMMAND)
+                .expectEvents(POST_CREATED_EVENT);
     }
 
     @Test
     public void modifyPost() throws Exception {
-        fixture.given(postCreatedEvent)
-                .when(modifyPostCommand)
-                .expectEvents(postModifiedEvent);
+        fixture.given(POST_CREATED_EVENT)
+                .when(MODIFY_POST_COMMAND)
+                .expectEvents(POST_MODIFIED_EVENT);
     }
 
     @Test
     public void deletePost() throws Exception {
-        fixture.given(postCreatedEvent)
-                .when(deletePostCommand)
-                .expectEvents(postDeletedEvent);
+        fixture.given(POST_CREATED_EVENT)
+                .when(DELETE_POST_COMMAND)
+                .expectEvents(POST_DELETED_COMMAND);
     }
 }

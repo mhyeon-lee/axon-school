@@ -1,5 +1,6 @@
 package kr.axon.post.query.model;
 
+import com.fasterxml.jackson.annotation.JsonUnwrapped;
 import kr.axon.post.command.domain.PostContent;
 import kr.axon.post.command.domain.PostIdentifier;
 import lombok.AccessLevel;
@@ -10,16 +11,15 @@ import lombok.NoArgsConstructor;
 import javax.persistence.Embedded;
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
-import javax.persistence.Table;
 
 @Entity
-@Table(name = "POST_VIEW")
 @Data
 @AllArgsConstructor
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class PostModel {
+public class Post {
 
     @EmbeddedId
+    @JsonUnwrapped
     private PostIdentifier id;
 
     @Embedded

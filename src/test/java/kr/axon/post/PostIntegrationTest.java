@@ -1,9 +1,10 @@
 package kr.axon.post;
 
 import kr.axon.AxonSchoolApplication;
+import kr.axon.post.command.AbstractPostCommandEventFixture;
 import kr.axon.post.command.domain.PostContent;
 import kr.axon.post.command.domain.PostIdentifier;
-import kr.axon.post.query.model.PostModel;
+import kr.axon.post.query.model.Post;
 import kr.axon.post.query.repository.PostQueryRepository;
 import org.axonframework.commandhandling.GenericCommandMessage;
 import org.axonframework.commandhandling.gateway.CommandGateway;
@@ -13,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.SpringApplicationConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
+import org.springframework.transaction.annotation.Transactional;
 
 import static kr.axon.post.command.api.PostCommand.*;
 import static org.hamcrest.CoreMatchers.is;
@@ -21,7 +23,8 @@ import static org.junit.Assert.*;
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringApplicationConfiguration(classes = AxonSchoolApplication.class)
 @WebAppConfiguration
-public class PostIntegrationTest {
+@Transactional
+public class PostIntegrationTest extends AbstractPostCommandEventFixture {
 
     @Autowired
     private CommandGateway commandGateway;
@@ -33,17 +36,16 @@ public class PostIntegrationTest {
     @Test
     public void createPostCommandTest() {
         // Given
-        final PostContent content = new PostContent("title", "body");
-
         // When
-        final PostModel createdPost = createNewPost(content);
+        final Post createdPost = createNewPost(CONTENT);
 
         // Then
         assertNotNull(createdPost);
-        assertThat(createdPost.getContent(), is(content));
+        assertNotNull(createdPost.getId());
+        assertThat(createdPost.getContent(), is(CONTENT));
     }
 
-    private PostModel createNewPost(PostContent content) {
+    protected Post createNewPost(PostContent content) {
         PostIdentifier id = new PostIdentifier();
         CreatePostCommand createPostCommand = new CreatePostCommand(id, content);
 
@@ -57,11 +59,9 @@ public class PostIntegrationTest {
     @Test
     public void modifyPostCommandTest() {
         // Given
-        final PostModel createdPost = createNewPost(new PostContent("title", "body"));
-        final PostContent modifyContent = createdPost.getContent()
-                .withTitle("modified title").withBody("modified body");
+        final Post createdPost = createNewPost(CONTENT);
         final ModifyPostCommand modifyPostCommand =
-                new ModifyPostCommand(createdPost.getId(), modifyContent);
+                new ModifyPostCommand(createdPost.getId(), MODIFY_CONTENT);
 
         // When
         commandGateway.sendAndWait(
@@ -69,15 +69,15 @@ public class PostIntegrationTest {
         );
 
         // Then
-        PostModel modifiedPost = repository.findOne(createdPost.getId());
+        Post modifiedPost = repository.findOne(createdPost.getId());
         assertNotNull(modifiedPost);
-        assertThat(modifiedPost.getContent(), is(modifyContent));
+        assertThat(modifiedPost.getContent(), is(MODIFY_CONTENT));
     }
 
     @Test
     public void deletePostCommandTest() {
         // Given
-        final PostModel createdPost = createNewPost(new PostContent("title", "body"));
+        final Post createdPost = createNewPost(CONTENT);
         final DeletePostCommand deletePostCommand = new DeletePostCommand(createdPost.getId());
 
         // When
@@ -86,7 +86,7 @@ public class PostIntegrationTest {
         );
 
         // Then
-        PostModel deletedPost = repository.findOne(createdPost.getId());
+        Post deletedPost = repository.findOne(createdPost.getId());
         assertNull(deletedPost);
     }
 }
