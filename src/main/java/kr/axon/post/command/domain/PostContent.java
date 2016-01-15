@@ -9,7 +9,7 @@ import javax.persistence.Embeddable;
 @AllArgsConstructor
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @EqualsAndHashCode
-@Embeddable
+@Embeddable       // for query JPA Model
 public class PostContent {
     @Wither
     private String title;

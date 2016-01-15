@@ -52,7 +52,7 @@ public class PostRestController {
         if (post == null) {
             throw new PostNotFoundException(id + " not exist.");
         }
-        return new ResponseEntity<Post>(post, HttpStatus.OK);
+        return new ResponseEntity<>(post, HttpStatus.OK);
     }
 
     @RequestMapping(method = RequestMethod.GET)

@@ -10,7 +10,8 @@ import org.axonframework.eventsourcing.annotation.EventSourcingHandler;
 import java.util.Collection;
 import java.util.Collections;
 
-import static kr.axon.post.command.api.PostCommand.*;
+import static kr.axon.post.command.api.PostCommand.CreatePostCommand;
+import static kr.axon.post.command.api.PostCommand.ModifyPostCommand;
 import static kr.axon.post.command.api.PostEvent.*;
 
 @NoArgsConstructor(access = AccessLevel.PROTECTED)

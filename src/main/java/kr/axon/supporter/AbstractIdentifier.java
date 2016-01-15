@@ -14,7 +14,7 @@ import java.io.Serializable;
 @MappedSuperclass
 @Embeddable     // for query JPA Model
 public abstract class AbstractIdentifier implements Serializable {
-    private static final long serialVersionUID = -756169764489352313L;
+    protected static final long serialVersionUID = -756169764489352313L;
 
     protected String id;
 
