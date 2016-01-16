@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.*;
 
 import static kr.axon.post.command.api.PostCommand.*;
 import static kr.axon.post.controller.hateoas.PostResourceAssembler.PostResource;
+import static kr.axon.supporter.Supporters.httpHeadersWithLocation;
 
 @RestController
 @RequestMapping("/api/posts")
@@ -39,9 +40,7 @@ public class PostRestController {
         PostIdentifier id = new PostIdentifier();
         CreatePostCommand command = new CreatePostCommand(id, content);
         commandGateway.sendAndWait(command);
-        HttpHeaders httpHeaders = new HttpHeaders();
-        httpHeaders.setLocation(PostResourceLinks.location(id).toUri());
-        return httpHeaders;
+        return httpHeadersWithLocation(PostResourceLinks.getOneUri(id));
     }
 
     @RequestMapping(value = "/{id}", method = RequestMethod.PUT)
@@ -50,9 +49,7 @@ public class PostRestController {
                               @RequestBody PostContent content) {
         ModifyPostCommand command = new ModifyPostCommand(id, content);
         commandGateway.sendAndWait(command);
-        HttpHeaders httpHeaders = new HttpHeaders();
-        httpHeaders.setLocation(PostResourceLinks.location(id).toUri());
-        return httpHeaders;
+        return httpHeadersWithLocation(PostResourceLinks.getOneUri(id));
     }
 
     @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)

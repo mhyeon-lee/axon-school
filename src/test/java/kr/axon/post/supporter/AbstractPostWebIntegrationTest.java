@@ -55,7 +55,7 @@ public abstract class AbstractPostWebIntegrationTest extends PostIntegrationTest
 
     @SneakyThrows
     protected ResultActions performGetOne(PostIdentifier id) {
-        return mockMvc.perform(get(getOneUri(id))
+        return mockMvc.perform(get(PostRestControllerUri.getOneUri(id))
                 .contentType(MediaType.APPLICATION_JSON));
     }
 
