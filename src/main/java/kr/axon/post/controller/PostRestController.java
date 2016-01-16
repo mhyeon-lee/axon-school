@@ -40,7 +40,7 @@ public class PostRestController {
         PostIdentifier id = new PostIdentifier();
         CreatePostCommand command = new CreatePostCommand(id, content);
         commandGateway.sendAndWait(command);
-        return httpHeadersWithLocation(PostResourceLinks.getOneUri(id));
+        return httpHeadersWithLocation(PostResourceLinks.getPostUri(id));
     }
 
     @RequestMapping(value = "/{id}", method = RequestMethod.PUT)
@@ -49,7 +49,7 @@ public class PostRestController {
                               @RequestBody PostContent content) {
         ModifyPostCommand command = new ModifyPostCommand(id, content);
         commandGateway.sendAndWait(command);
-        return httpHeadersWithLocation(PostResourceLinks.getOneUri(id));
+        return httpHeadersWithLocation(PostResourceLinks.getPostUri(id));
     }
 
     @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)

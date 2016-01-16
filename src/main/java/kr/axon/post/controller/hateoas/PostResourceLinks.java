@@ -15,7 +15,7 @@ public class PostResourceLinks {
 
     private static final Class<PostRestController> controllerClass = PostRestController.class;
 
-    public static URI getOneUri(PostIdentifier id) {
+    public static URI getPostUri(PostIdentifier id) {
         return uriTo(on(controllerClass).getPost(id));
     }
 }

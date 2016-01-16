@@ -41,7 +41,7 @@ public class PostWebIntegrationTest extends AbstractPostWebIntegrationTest {
         resultActions.andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(header().string("Location",
-                        PostRestControllerUri.getOneUri(post.getId()).toString()));
+                        PostRestControllerUri.getPostUri(post.getId()).toString()));
     }
 
     @Test
