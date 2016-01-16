@@ -73,7 +73,8 @@ public class PostWebIntegrationTest extends AbstractPostWebIntegrationTest {
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaTypes.HAL_JSON))
                 .andExpect(jsonPath("$.content.title").value(post.getContent().getTitle()))
-                .andExpect(jsonPath("$.content.body").value(post.getContent().getBody()));
+                .andExpect(jsonPath("$.content.body").value(post.getContent().getBody()))
+                .andExpect(jsonPath("$._links.self").exists());
     }
 
     @Test
@@ -94,8 +95,11 @@ public class PostWebIntegrationTest extends AbstractPostWebIntegrationTest {
                 .andExpect(jsonPath("$._embedded.posts").value(hasSize(2)))
                 .andExpect(jsonPath("$._embedded.posts[0].content.title").value(CONTENT.getTitle()))
                 .andExpect(jsonPath("$._embedded.posts[0].content.body").value(CONTENT.getBody()))
+                .andExpect(jsonPath("$._embedded.posts[0]._links.self").exists())
                 .andExpect(jsonPath("$._embedded.posts[1].content.title").value(CONTENT2.getTitle()))
                 .andExpect(jsonPath("$._embedded.posts[1].content.body").value(CONTENT2.getBody()))
-                .andExpect(jsonPath("$.page").exists());
+                .andExpect(jsonPath("$._embedded.posts[1]._links.self").exists())
+                .andExpect(jsonPath("$.page").exists())
+                .andExpect(jsonPath("$._links.self").exists());
     }
 }
