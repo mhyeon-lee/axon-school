@@ -1,4 +1,4 @@
-package kr.axon.post.command;
+package kr.axon.post.supporter;
 
 import kr.axon.post.command.domain.PostContent;
 import kr.axon.post.command.domain.PostIdentifier;

@@ -1,7 +1,7 @@
 package kr.axon.post;
 
 import kr.axon.AxonSchoolApplication;
-import kr.axon.post.command.AbstractPostCommandEventFixture;
+import kr.axon.post.supporter.AbstractPostCommandEventFixture;
 import kr.axon.post.command.domain.PostContent;
 import kr.axon.post.command.domain.PostIdentifier;
 import kr.axon.post.query.model.Post;

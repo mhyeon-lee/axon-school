@@ -2,16 +2,23 @@ package kr.axon.post.controller;
 
 import kr.axon.post.command.domain.PostContent;
 import kr.axon.post.command.domain.PostIdentifier;
+import kr.axon.post.controller.hateoas.PostResourceAssembler;
+import kr.axon.post.controller.hateoas.PostResourceLinks;
 import kr.axon.post.exception.PostNotFoundException;
 import kr.axon.post.query.model.Post;
 import kr.axon.post.query.repository.PostQueryRepository;
 import org.axonframework.commandhandling.gateway.CommandGateway;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.hateoas.Resource;
+import org.springframework.hateoas.Resources;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 import static kr.axon.post.command.api.PostCommand.*;
+import static kr.axon.post.controller.hateoas.PostResourceAssembler.*;
 
 @RestController
 @RequestMapping("/api/posts")
@@ -22,6 +29,9 @@ public class PostRestController {
 
     @Autowired
     private PostQueryRepository repository;
+
+    @Autowired
+    private PostResourceAssembler resourceAssembler;
 
     @RequestMapping(method = RequestMethod.POST)
     public ResponseEntity save(@RequestBody PostContent content) {
@@ -47,16 +57,18 @@ public class PostRestController {
     }
 
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
-    public ResponseEntity<Post> getOne(@PathVariable PostIdentifier id) {
+    public PostResource getOne(@PathVariable PostIdentifier id) {
         Post post = repository.findOne(id);
         if (post == null) {
             throw new PostNotFoundException(id + " not exist.");
         }
-        return new ResponseEntity<>(post, HttpStatus.OK);
+        return resourceAssembler.toResource(post);
     }
 
     @RequestMapping(method = RequestMethod.GET)
-    public ResponseEntity<?> findAll() {
-        return new ResponseEntity<>(repository.findAll(), HttpStatus.OK);
+    public Resources<PostResourceAssembler.PostResource> findAll() {
+        List<Post> posts = repository.findAll();
+        return resourceAssembler.toResources(posts,
+                PostResourceLinks.findAll().withSelfRel());
     }
 }

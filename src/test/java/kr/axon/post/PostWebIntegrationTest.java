@@ -2,6 +2,7 @@ package kr.axon.post;
 
 import kr.axon.post.command.domain.PostContent;
 import kr.axon.post.query.model.Post;
+import kr.axon.post.supporter.AbstractPostWebIntegrationTest;
 import lombok.SneakyThrows;
 import org.junit.Test;
 import org.springframework.test.web.servlet.ResultActions;
@@ -65,7 +66,6 @@ public class PostWebIntegrationTest extends AbstractPostWebIntegrationTest {
         // Then
         resultActions.andDo(print())
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.id").value(post.getId().toString()))
                 .andExpect(jsonPath("$.content.title").value(post.getContent().getTitle()))
                 .andExpect(jsonPath("$.content.body").value(post.getContent().getBody()));
     }
@@ -84,12 +84,10 @@ public class PostWebIntegrationTest extends AbstractPostWebIntegrationTest {
         // Then
         resultActions.andDo(print())
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$").value(hasSize(2)))
-                .andExpect(jsonPath("$[0].id").value(POST1.getId().toString()))
-                .andExpect(jsonPath("$[0].content.title").value(CONTENT.getTitle()))
-                .andExpect(jsonPath("$[0].content.body").value(CONTENT.getBody()))
-                .andExpect(jsonPath("$[1].id").value(POST2.getId().toString()))
-                .andExpect(jsonPath("$[1].content.title").value(CONTENT2.getTitle()))
-                .andExpect(jsonPath("$[1].content.body").value(CONTENT2.getBody()));
+                .andExpect(jsonPath("$._embedded.posts").value(hasSize(2)))
+                .andExpect(jsonPath("$._embedded.posts[0].content.title").value(CONTENT.getTitle()))
+                .andExpect(jsonPath("$._embedded.posts[0].content.body").value(CONTENT.getBody()))
+                .andExpect(jsonPath("$._embedded.posts[1].content.title").value(CONTENT2.getTitle()))
+                .andExpect(jsonPath("$._embedded.posts[1].content.body").value(CONTENT2.getBody()));
     }
 }

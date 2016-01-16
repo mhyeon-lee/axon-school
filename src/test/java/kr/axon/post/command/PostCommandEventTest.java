@@ -2,6 +2,7 @@ package kr.axon.post.command;
 
 import kr.axon.post.command.domain.PostAggregateRoot;
 import kr.axon.post.command.handler.PostCommandHandler;
+import kr.axon.post.supporter.AbstractPostCommandEventFixture;
 import org.axonframework.test.FixtureConfiguration;
 import org.axonframework.test.Fixtures;
 import org.junit.Before;

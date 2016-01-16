@@ -1,6 +1,5 @@
 package kr.axon.post.query.model;
 
-import com.fasterxml.jackson.annotation.JsonUnwrapped;
 import kr.axon.post.command.domain.PostContent;
 import kr.axon.post.command.domain.PostIdentifier;
 import lombok.AccessLevel;
@@ -19,7 +18,6 @@ import javax.persistence.Entity;
 public class Post {
 
     @EmbeddedId
-    @JsonUnwrapped
     private PostIdentifier id;
 
     @Embedded

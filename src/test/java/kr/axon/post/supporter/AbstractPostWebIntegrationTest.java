@@ -1,22 +1,21 @@
-package kr.axon.post;
+package kr.axon.post.supporter;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import kr.axon.post.PostIntegrationTest;
 import kr.axon.post.command.domain.PostContent;
 import kr.axon.post.command.domain.PostIdentifier;
-import kr.axon.post.controller.PostRestController;
 import lombok.SneakyThrows;
 import org.junit.Before;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.MediaType;
+import org.springframework.hateoas.MediaTypes;
 import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 
-import static kr.axon.supporter.TestSupporters.uriTo;
+import static kr.axon.post.supporter.PostRestControllerUri.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
-import static org.springframework.web.servlet.mvc.method.annotation.MvcUriComponentsBuilder.on;
 
 @WebAppConfiguration
 public abstract class AbstractPostWebIntegrationTest extends PostIntegrationTest {
@@ -29,8 +28,6 @@ public abstract class AbstractPostWebIntegrationTest extends PostIntegrationTest
 
     MockMvc mockMvc;
 
-    Class<PostRestController> controllerClass = PostRestController.class;
-
     @Before
     public void setUp() {
         mockMvc = MockMvcBuilders
@@ -40,48 +37,33 @@ public abstract class AbstractPostWebIntegrationTest extends PostIntegrationTest
 
     @SneakyThrows
     protected ResultActions performSave(PostContent content) {
-        return mockMvc.perform(
-                post(uriTo(on(controllerClass)
-                        .save(content)))
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .content(objectMapper.writeValueAsString(content))
-        );
+        return mockMvc.perform(post(saveUri(content))
+                .contentType(MediaTypes.HAL_JSON)
+                .content(objectMapper.writeValueAsString(content)));
     }
 
     @SneakyThrows
     protected ResultActions performModify(PostIdentifier id, PostContent content) {
-        return mockMvc.perform(
-                put(uriTo(on(controllerClass)
-                        .modify(id, content)))
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .content(objectMapper.writeValueAsString(content))
-        );
+        return mockMvc.perform(put(modifyUri(id, content))
+                .contentType(MediaTypes.HAL_JSON)
+                .content(objectMapper.writeValueAsString(content)));
     }
 
     @SneakyThrows
     protected ResultActions performDelete(PostIdentifier id) {
-        return mockMvc.perform(
-                delete(uriTo(on(controllerClass)
-                        .delete(id)))
-                        .contentType(MediaType.APPLICATION_JSON)
-        );
+        return mockMvc.perform(delete(deleteUri(id))
+                .contentType(MediaTypes.HAL_JSON));
     }
 
     @SneakyThrows
     protected ResultActions performGetOne(PostIdentifier id) {
-        return mockMvc.perform(
-                get(uriTo(on(controllerClass)
-                        .getOne(id)))
-                        .contentType(MediaType.APPLICATION_JSON)
-        );
+        return mockMvc.perform(get(getOneUri(id))
+                .contentType(MediaTypes.HAL_JSON));
     }
 
     @SneakyThrows
     protected ResultActions performFindAll() {
-        return mockMvc.perform(
-                get(uriTo(on(controllerClass)
-                        .findAll()))
-                        .contentType(MediaType.APPLICATION_JSON)
-        );
+        return mockMvc.perform(get(findAllUri())
+                .contentType(MediaTypes.HAL_JSON));
     }
 }
