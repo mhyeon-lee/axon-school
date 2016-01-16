@@ -28,7 +28,7 @@ public class PostRestControllerUri extends PostResourceLinks {
     }
 
     public static URI findAllUri(Pageable pageable) {
-        return uriTo(on(controllerClass).findAll(pageable));
+        return uriTo(on(controllerClass).showAll(pageable));
     }
 
 }

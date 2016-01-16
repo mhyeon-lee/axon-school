@@ -61,7 +61,7 @@ public class PostRestController {
     }
 
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
-    public PostResource getOne(@PathVariable PostIdentifier id) {
+    public PostResource getPost(@PathVariable PostIdentifier id) {
         Post post = repository.findOne(id);
         if (post == null) {
             throw new PostNotFoundException(id + " not exist.");
@@ -70,7 +70,7 @@ public class PostRestController {
     }
 
     @RequestMapping(method = RequestMethod.GET)
-    public PagedResources<PostResource> findAll(@PageableDefault Pageable pageable) {
+    public PagedResources<PostResource> showAll(@PageableDefault Pageable pageable) {
         Page<Post> posts = repository.findAll(pageable);
         return resourceAssembler.toResources(posts);
     }
