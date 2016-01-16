@@ -3,6 +3,7 @@ package kr.axon.post.supporter;
 import kr.axon.post.command.domain.PostContent;
 import kr.axon.post.command.domain.PostIdentifier;
 import kr.axon.post.controller.PostRestController;
+import org.springframework.data.domain.Pageable;
 
 import java.net.URI;
 
@@ -29,7 +30,8 @@ public class PostRestControllerUri {
         return uriTo(on(controllerClass).getOne(id));
     }
 
-    public static URI findAllUri() {
-        return uriTo(on(controllerClass).findAll());
+    public static URI findAllUri(Pageable pageable) {
+        return uriTo(on(controllerClass).findAll(pageable));
     }
+
 }

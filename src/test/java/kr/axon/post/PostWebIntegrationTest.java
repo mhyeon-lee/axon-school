@@ -95,6 +95,7 @@ public class PostWebIntegrationTest extends AbstractPostWebIntegrationTest {
                 .andExpect(jsonPath("$._embedded.posts[0].content.title").value(CONTENT.getTitle()))
                 .andExpect(jsonPath("$._embedded.posts[0].content.body").value(CONTENT.getBody()))
                 .andExpect(jsonPath("$._embedded.posts[1].content.title").value(CONTENT2.getTitle()))
-                .andExpect(jsonPath("$._embedded.posts[1].content.body").value(CONTENT2.getBody()));
+                .andExpect(jsonPath("$._embedded.posts[1].content.body").value(CONTENT2.getBody()))
+                .andExpect(jsonPath("$.page").exists());
     }
 }

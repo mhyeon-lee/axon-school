@@ -8,7 +8,6 @@ import lombok.SneakyThrows;
 import org.junit.Before;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
-import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
@@ -17,7 +16,6 @@ import org.springframework.web.context.WebApplicationContext;
 import static kr.axon.post.supporter.PostRestControllerUri.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 
-@WebAppConfiguration
 public abstract class AbstractPostWebIntegrationTest extends PostIntegrationTest {
 
     @Autowired
@@ -63,7 +61,7 @@ public abstract class AbstractPostWebIntegrationTest extends PostIntegrationTest
 
     @SneakyThrows
     protected ResultActions performFindAll() {
-        return mockMvc.perform(get(findAllUri())
+        return mockMvc.perform(get(findAllUri(null))
                 .contentType(MediaType.APPLICATION_JSON));
     }
 }

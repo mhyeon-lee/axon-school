@@ -9,12 +9,13 @@ import kr.axon.post.query.model.Post;
 import kr.axon.post.query.repository.PostQueryRepository;
 import org.axonframework.commandhandling.gateway.CommandGateway;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.hateoas.Resources;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
+import org.springframework.hateoas.PagedResources;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 import static kr.axon.post.command.api.PostCommand.*;
 import static kr.axon.post.controller.hateoas.PostResourceAssembler.PostResource;
@@ -72,9 +73,8 @@ public class PostRestController {
     }
 
     @RequestMapping(method = RequestMethod.GET)
-    public Resources<PostResourceAssembler.PostResource> findAll() {
-        List<Post> posts = repository.findAll();
-        return resourceAssembler.toResources(posts,
-                PostResourceLinks.findAll().withSelfRel());
+    public PagedResources<PostResource> findAll(@PageableDefault Pageable pageable) {
+        Page<Post> posts = repository.findAll(pageable);
+        return resourceAssembler.toResources(posts);
     }
 }
