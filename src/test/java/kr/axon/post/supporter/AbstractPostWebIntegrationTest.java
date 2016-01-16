@@ -7,7 +7,7 @@ import kr.axon.post.command.domain.PostIdentifier;
 import lombok.SneakyThrows;
 import org.junit.Before;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.hateoas.MediaTypes;
+import org.springframework.http.MediaType;
 import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
@@ -38,32 +38,32 @@ public abstract class AbstractPostWebIntegrationTest extends PostIntegrationTest
     @SneakyThrows
     protected ResultActions performSave(PostContent content) {
         return mockMvc.perform(post(saveUri(content))
-                .contentType(MediaTypes.HAL_JSON)
+                .contentType(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(content)));
     }
 
     @SneakyThrows
     protected ResultActions performModify(PostIdentifier id, PostContent content) {
         return mockMvc.perform(put(modifyUri(id, content))
-                .contentType(MediaTypes.HAL_JSON)
+                .contentType(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(content)));
     }
 
     @SneakyThrows
     protected ResultActions performDelete(PostIdentifier id) {
         return mockMvc.perform(delete(deleteUri(id))
-                .contentType(MediaTypes.HAL_JSON));
+                .contentType(MediaType.APPLICATION_JSON));
     }
 
     @SneakyThrows
     protected ResultActions performGetOne(PostIdentifier id) {
         return mockMvc.perform(get(getOneUri(id))
-                .contentType(MediaTypes.HAL_JSON));
+                .contentType(MediaType.APPLICATION_JSON));
     }
 
     @SneakyThrows
     protected ResultActions performFindAll() {
         return mockMvc.perform(get(findAllUri())
-                .contentType(MediaTypes.HAL_JSON));
+                .contentType(MediaType.APPLICATION_JSON));
     }
 }

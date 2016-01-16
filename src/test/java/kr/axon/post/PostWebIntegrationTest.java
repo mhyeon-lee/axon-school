@@ -3,14 +3,15 @@ package kr.axon.post;
 import kr.axon.post.command.domain.PostContent;
 import kr.axon.post.query.model.Post;
 import kr.axon.post.supporter.AbstractPostWebIntegrationTest;
+import kr.axon.post.supporter.PostRestControllerUri;
 import lombok.SneakyThrows;
 import org.junit.Test;
+import org.springframework.hateoas.MediaTypes;
 import org.springframework.test.web.servlet.ResultActions;
 
-import static org.hamcrest.Matchers.hasSize;
+import static org.hamcrest.Matchers.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 public class PostWebIntegrationTest extends AbstractPostWebIntegrationTest {
 
@@ -23,7 +24,8 @@ public class PostWebIntegrationTest extends AbstractPostWebIntegrationTest {
 
         // Then
         resultActions.andDo(print())
-                .andExpect(status().isCreated());
+                .andExpect(status().isCreated())
+                .andExpect(header().string("Location", notNullValue()));
     }
 
     @Test
@@ -37,7 +39,9 @@ public class PostWebIntegrationTest extends AbstractPostWebIntegrationTest {
 
         // Then
         resultActions.andDo(print())
-                .andExpect(status().isOk());
+                .andExpect(status().isOk())
+                .andExpect(header().string("Location",
+                        PostRestControllerUri.getOneUri(post.getId()).toString()));
     }
 
     @Test
@@ -51,7 +55,8 @@ public class PostWebIntegrationTest extends AbstractPostWebIntegrationTest {
 
         // Then
         resultActions.andDo(print())
-                .andExpect(status().isNoContent());
+                .andExpect(status().isNoContent())
+                .andExpect(header().string("Location", nullValue()));
     }
 
     @Test
@@ -66,6 +71,7 @@ public class PostWebIntegrationTest extends AbstractPostWebIntegrationTest {
         // Then
         resultActions.andDo(print())
                 .andExpect(status().isOk())
+                .andExpect(content().contentType(MediaTypes.HAL_JSON))
                 .andExpect(jsonPath("$.content.title").value(post.getContent().getTitle()))
                 .andExpect(jsonPath("$.content.body").value(post.getContent().getBody()));
     }
@@ -84,6 +90,7 @@ public class PostWebIntegrationTest extends AbstractPostWebIntegrationTest {
         // Then
         resultActions.andDo(print())
                 .andExpect(status().isOk())
+                .andExpect(content().contentType(MediaTypes.HAL_JSON))
                 .andExpect(jsonPath("$._embedded.posts").value(hasSize(2)))
                 .andExpect(jsonPath("$._embedded.posts[0].content.title").value(CONTENT.getTitle()))
                 .andExpect(jsonPath("$._embedded.posts[0].content.body").value(CONTENT.getBody()))
