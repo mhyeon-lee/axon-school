@@ -133,4 +133,24 @@ public class PostWebIntegrationTest extends AbstractPostWebIntegrationTest {
                 .andExpect(jsonPath("$._links.self").exists());
     }
 
+    @Test
+    @SneakyThrows
+    public void modifyOrDeleteNotExistPost() {
+        // Given
+        final PostIdentifier NOT_EXIST_POST_ID = new PostIdentifier("NOT_EXIST_POST_ID");
+
+        // When
+        final ResultActions modifyAction = performModify(NOT_EXIST_POST_ID, MODIFY_CONTENT);
+
+        // Then
+        modifyAction.andDo(print())
+                .andExpect(status().isBadRequest());
+
+        // When
+        final ResultActions deleteAction = performDelete(NOT_EXIST_POST_ID);
+
+        // Then
+        deleteAction.andDo(print())
+                .andExpect(status().isBadRequest());
+    }
 }
