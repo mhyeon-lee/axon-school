@@ -61,12 +61,12 @@ public class PostWebIntegrationTest extends AbstractPostWebIntegrationTest {
 
     @Test
     @SneakyThrows
-    public void getOne() {
+    public void getPost() {
         // Given
         final Post post = createNewPost(CONTENT);
 
         // When
-        final ResultActions resultActions = performGetOne(post.getId());
+        final ResultActions resultActions = performGetPost(post.getId());
 
         // Then
         resultActions.andDo(print())
@@ -79,14 +79,14 @@ public class PostWebIntegrationTest extends AbstractPostWebIntegrationTest {
 
     @Test
     @SneakyThrows
-    public void findAll() {
+    public void showAll() {
         // Given
         final Post POST1 = createNewPost(CONTENT);
         final PostContent CONTENT2 = new PostContent("title2", "body2");
         final Post POST2 = createNewPost(CONTENT2);
 
         // When
-        final ResultActions resultActions = performFindAll();
+        final ResultActions resultActions = performShowAll();
 
         // Then
         resultActions.andDo(print())
