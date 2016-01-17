@@ -4,7 +4,6 @@ import kr.axon.post.command.domain.PostContent;
 import kr.axon.post.command.domain.PostIdentifier;
 import kr.axon.post.controller.hateoas.PostResourceAssembler;
 import kr.axon.post.controller.hateoas.PostResourceLinks;
-import kr.axon.post.exception.PostNotFoundException;
 import kr.axon.post.query.model.Post;
 import kr.axon.post.query.repository.PostQueryRepository;
 import org.axonframework.commandhandling.gateway.CommandGateway;
@@ -63,9 +62,6 @@ public class PostRestController {
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
     public PostResource getPost(@PathVariable PostIdentifier id) {
         Post post = repository.findOne(id);
-        if (post == null) {
-            throw new PostNotFoundException(id + " not exist.");
-        }
         return resourceAssembler.toResource(post);
     }
 

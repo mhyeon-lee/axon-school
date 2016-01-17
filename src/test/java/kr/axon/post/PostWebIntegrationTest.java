@@ -1,6 +1,7 @@
 package kr.axon.post;
 
 import kr.axon.post.command.domain.PostContent;
+import kr.axon.post.command.domain.PostIdentifier;
 import kr.axon.post.query.model.Post;
 import kr.axon.post.supporter.AbstractPostWebIntegrationTest;
 import kr.axon.post.supporter.PostRestControllerUri;
@@ -101,5 +102,19 @@ public class PostWebIntegrationTest extends AbstractPostWebIntegrationTest {
                 .andExpect(jsonPath("$._embedded.posts[1]._links.self").exists())
                 .andExpect(jsonPath("$.page").exists())
                 .andExpect(jsonPath("$._links.self").exists());
+    }
+
+    @Test
+    @SneakyThrows
+    public void getPostThenNotFoundException() {
+        // Given
+        final PostIdentifier NOT_EXIST_POST_ID = new PostIdentifier("NOT_EXIST_POST_ID");
+
+        // When
+        final ResultActions resultActions = performGetPost(NOT_EXIST_POST_ID);
+
+        // Then
+        resultActions.andDo(print())
+                .andExpect(status().isNotFound());
     }
 }
