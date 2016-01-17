@@ -11,6 +11,8 @@ import org.springframework.hateoas.Resource;
 import org.springframework.hateoas.mvc.ResourceAssemblerSupport;
 import org.springframework.stereotype.Component;
 
+import javax.validation.constraints.NotNull;
+
 @Component
 public class PostResourceAssembler
         extends ResourceAssemblerSupport<Post, PostResourceAssembler.PostResource> {
@@ -23,19 +25,19 @@ public class PostResourceAssembler
     }
 
     @Override
-    public PostResource toResource(Post post) {
-        if (post == null || post.getId() == null) {
+    public PostResource toResource(@NotNull Post post) {
+        if (post.getId() == null) {
             throw new PostNotFoundException();
         }
         return createResourceWithId(post.getId(), post);
     }
 
     @Override
-    protected PostResource instantiateResource(Post post) {
+    protected PostResource instantiateResource(@NotNull Post post) {
         return new PostResource(post);
     }
 
-    public PagedResources<PostResource> toResources(Page<Post> posts) {
+    public PagedResources<PostResource> toResources(@NotNull Page<Post> posts) {
         return pagedResourcesAssembler.toResource(posts, this);
     }
 

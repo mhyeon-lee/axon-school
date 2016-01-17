@@ -117,4 +117,20 @@ public class PostWebIntegrationTest extends AbstractPostWebIntegrationTest {
         resultActions.andDo(print())
                 .andExpect(status().isNotFound());
     }
+
+    @Test
+    @SneakyThrows
+    public void showAllThenBodyNothing() {
+        // Given
+        // When
+        final ResultActions resultActions = performShowAll();
+
+        // Then
+        resultActions.andDo(print())
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$._embedded").doesNotExist())
+                .andExpect(jsonPath("$.page").exists())
+                .andExpect(jsonPath("$._links.self").exists());
+    }
+
 }

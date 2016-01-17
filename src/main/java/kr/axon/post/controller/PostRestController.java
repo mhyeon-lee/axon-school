@@ -4,6 +4,7 @@ import kr.axon.post.command.domain.PostContent;
 import kr.axon.post.command.domain.PostIdentifier;
 import kr.axon.post.controller.hateoas.PostResourceAssembler;
 import kr.axon.post.controller.hateoas.PostResourceLinks;
+import kr.axon.post.exception.PostNotFoundException;
 import kr.axon.post.query.model.Post;
 import kr.axon.post.query.repository.PostQueryRepository;
 import org.axonframework.commandhandling.gateway.CommandGateway;
@@ -15,6 +16,8 @@ import org.springframework.hateoas.PagedResources;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.Optional;
 
 import static kr.axon.post.command.api.PostCommand.*;
 import static kr.axon.post.controller.hateoas.PostResourceAssembler.PostResource;
@@ -61,8 +64,9 @@ public class PostRestController {
 
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
     public PostResource getPost(@PathVariable PostIdentifier id) {
-        Post post = repository.findOne(id);
-        return resourceAssembler.toResource(post);
+        Optional<Post> post = repository.findById(id);
+        post.orElseThrow(() -> new PostNotFoundException(id));
+        return resourceAssembler.toResource(post.get());
     }
 
     @RequestMapping(method = RequestMethod.GET)
