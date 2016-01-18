@@ -113,7 +113,7 @@ public class PostWebIntegrationTest extends AbstractPostWebCommandQueryTest {
         // When
         final ResultActions resultActions = performGetPost(NOT_EXIST_POST_ID);
 
-        // Then
+        // Then : PostNotFoundException
         resultActions.andDo(print())
                 .andExpect(status().isNotFound());
     }
@@ -142,14 +142,14 @@ public class PostWebIntegrationTest extends AbstractPostWebCommandQueryTest {
         // When
         final ResultActions modifyAction = performModify(NOT_EXIST_POST_ID, MODIFY_CONTENT);
 
-        // Then
+        // Then : AggregateNotFoundException
         modifyAction.andDo(print())
                 .andExpect(status().isBadRequest());
 
         // When
         final ResultActions deleteAction = performDelete(NOT_EXIST_POST_ID);
 
-        // Then
+        // Then : AggregateNotFoundException
         deleteAction.andDo(print())
                 .andExpect(status().isBadRequest());
     }
