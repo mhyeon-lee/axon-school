@@ -3,7 +3,7 @@ package kr.axon.post;
 import kr.axon.post.command.domain.PostContent;
 import kr.axon.post.command.domain.PostIdentifier;
 import kr.axon.post.query.model.Post;
-import kr.axon.post.supporter.AbstractPostWebIntegrationTest;
+import kr.axon.post.supporter.AbstractPostWebCommandQueryTest;
 import kr.axon.post.supporter.PostRestControllerUri;
 import lombok.SneakyThrows;
 import org.junit.Test;
@@ -14,7 +14,7 @@ import static org.hamcrest.Matchers.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
-public class PostWebIntegrationTest extends AbstractPostWebIntegrationTest {
+public class PostWebCommandQueryTest extends AbstractPostWebCommandQueryTest {
 
     @Test
     @SneakyThrows

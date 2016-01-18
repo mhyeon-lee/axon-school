@@ -24,7 +24,7 @@ import static org.junit.Assert.*;
 @SpringApplicationConfiguration(classes = AxonSchoolApplication.class)
 @WebAppConfiguration
 @Transactional
-public class PostIntegrationTest extends AbstractPostCommandEventFixture {
+public class PostCommandQueryTest extends AbstractPostCommandEventFixture {
 
     @Autowired
     private CommandGateway commandGateway;

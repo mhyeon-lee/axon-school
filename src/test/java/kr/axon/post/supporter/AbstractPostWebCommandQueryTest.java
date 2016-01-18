@@ -1,7 +1,7 @@
 package kr.axon.post.supporter;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import kr.axon.post.PostIntegrationTest;
+import kr.axon.post.PostCommandQueryTest;
 import kr.axon.post.command.domain.PostContent;
 import kr.axon.post.command.domain.PostIdentifier;
 import lombok.SneakyThrows;
@@ -16,7 +16,7 @@ import org.springframework.web.context.WebApplicationContext;
 import static kr.axon.post.supporter.PostRestControllerUri.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 
-public abstract class AbstractPostWebIntegrationTest extends PostIntegrationTest {
+public abstract class AbstractPostWebCommandQueryTest extends PostCommandQueryTest {
 
     @Autowired
     WebApplicationContext wac;
