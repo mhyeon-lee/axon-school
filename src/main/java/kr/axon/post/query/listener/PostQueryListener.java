@@ -1,6 +1,6 @@
 package kr.axon.post.query.listener;
 
-import kr.axon.post.query.supporter.PostSyncSupporter;
+import kr.axon.post.query.synchronizer.PostQuerySynchronizer;
 import org.axonframework.eventhandling.annotation.EventHandler;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -11,20 +11,20 @@ import static kr.axon.post.command.api.PostEvent.*;
 public class PostQueryListener {
 
     @Autowired
-    private PostSyncSupporter syncSupporter;
+    private PostQuerySynchronizer synchronizer;
 
     @EventHandler
     private void applyPostCreatedEvent(PostCreatedEvent event) {
-        syncSupporter.save(event);
+        synchronizer.save(event);
     }
 
     @EventHandler
     private void applyPostModifiedEvent(PostModifiedEvent event) {
-        syncSupporter.update(event);
+        synchronizer.update(event);
     }
 
     @EventHandler
     private void applyPostDeletedEvent(PostDeletedEvent event) {
-        syncSupporter.delete(event);
+        synchronizer.delete(event);
     }
 }

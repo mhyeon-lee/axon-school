@@ -1,4 +1,4 @@
-package kr.axon.post.query.supporter;
+package kr.axon.post.query.synchronizer;
 
 import kr.axon.post.query.model.Post;
 import kr.axon.post.query.repository.PostQueryRepository;
@@ -12,7 +12,7 @@ import static kr.axon.post.command.api.PostEvent.*;
 
 @Component
 @Transactional
-public class PostSyncSupporter {
+public class PostQuerySynchronizer {
 
     @Autowired
     private PostQueryRepository repository;
