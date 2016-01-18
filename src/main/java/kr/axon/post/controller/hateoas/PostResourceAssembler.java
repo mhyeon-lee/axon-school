@@ -1,7 +1,6 @@
 package kr.axon.post.controller.hateoas;
 
 import kr.axon.post.controller.PostRestController;
-import kr.axon.post.exception.PostNotFoundException;
 import kr.axon.post.query.model.Post;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -25,9 +24,6 @@ public class PostResourceAssembler
 
     @Override
     public PostResource toResource(@NotNull Post post) {
-        if (post.getId() == null) {
-            throw new PostNotFoundException();
-        }
         return createResourceWithId(post.getId(), post);
     }
 
