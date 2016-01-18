@@ -14,7 +14,7 @@ import static org.hamcrest.Matchers.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
-public class PostWebCommandQueryTest extends AbstractPostWebCommandQueryTest {
+public class PostWebIntegrationTest extends AbstractPostWebCommandQueryTest {
 
     @Test
     @SneakyThrows
