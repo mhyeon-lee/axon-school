@@ -106,7 +106,7 @@ public class PostWebCommandQueryTest extends AbstractPostWebCommandQueryTest {
 
     @Test
     @SneakyThrows
-    public void getPostThenNotFoundException() {
+    public void getPostThenPostNotFoundException() {
         // Given
         final PostIdentifier NOT_EXIST_POST_ID = new PostIdentifier("NOT_EXIST_POST_ID");
 
@@ -120,7 +120,7 @@ public class PostWebCommandQueryTest extends AbstractPostWebCommandQueryTest {
 
     @Test
     @SneakyThrows
-    public void showAllThenBodyNothing() {
+    public void showAllThenResultNothing() {
         // Given
         // When
         final ResultActions resultActions = performShowAll();
@@ -135,7 +135,7 @@ public class PostWebCommandQueryTest extends AbstractPostWebCommandQueryTest {
 
     @Test
     @SneakyThrows
-    public void modifyOrDeleteNotExistPost() {
+    public void modifyOrDeleteThenAggregateNotFoundException() {
         // Given
         final PostIdentifier NOT_EXIST_POST_ID = new PostIdentifier("NOT_EXIST_POST_ID");
 
