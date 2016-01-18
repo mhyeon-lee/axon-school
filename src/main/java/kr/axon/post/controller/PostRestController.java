@@ -2,6 +2,7 @@ package kr.axon.post.controller;
 
 import kr.axon.post.command.domain.PostContent;
 import kr.axon.post.command.domain.PostIdentifier;
+import kr.axon.post.controller.hateoas.PostResource;
 import kr.axon.post.controller.hateoas.PostResourceAssembler;
 import kr.axon.post.controller.hateoas.PostResourceLinks;
 import kr.axon.post.exception.PostNotFoundException;
@@ -20,7 +21,6 @@ import org.springframework.web.bind.annotation.*;
 import java.util.Optional;
 
 import static kr.axon.post.command.api.PostCommand.*;
-import static kr.axon.post.controller.hateoas.PostResourceAssembler.PostResource;
 import static kr.axon.supporter.Supporters.httpHeadersWithLocation;
 
 @RestController
