@@ -12,10 +12,8 @@ import org.axonframework.eventsourcing.EventSourcingRepository;
 import org.axonframework.eventstore.EventStore;
 import org.axonframework.eventstore.fs.FileSystemEventStore;
 import org.axonframework.eventstore.fs.SimpleEventFileResolver;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.transaction.PlatformTransactionManager;
 
 import java.io.File;
 
@@ -23,9 +21,6 @@ import java.io.File;
 @AnnotationDriven
 @SuppressWarnings("unused")
 public class AxonConfiguration {
-
-    @Autowired
-    private PlatformTransactionManager transactionManager;
 
     @Bean
     public CommandBus commandBus() {
