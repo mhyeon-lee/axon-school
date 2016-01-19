@@ -1,5 +1,6 @@
 package kr.axon;
 
+import com.mongodb.Mongo;
 import kr.axon.post.command.domain.PostAggregateRoot;
 import org.axonframework.commandhandling.CommandBus;
 import org.axonframework.commandhandling.SimpleCommandBus;
@@ -10,17 +11,24 @@ import org.axonframework.eventhandling.EventBus;
 import org.axonframework.eventhandling.SimpleEventBus;
 import org.axonframework.eventsourcing.EventSourcingRepository;
 import org.axonframework.eventstore.EventStore;
-import org.axonframework.eventstore.fs.FileSystemEventStore;
-import org.axonframework.eventstore.fs.SimpleEventFileResolver;
+import org.axonframework.eventstore.mongo.DefaultMongoTemplate;
+import org.axonframework.eventstore.mongo.MongoEventStore;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-
-import java.io.File;
 
 @Configuration
 @AnnotationDriven
 @SuppressWarnings("unused")
 public class AxonConfiguration {
+
+    @Autowired
+    private Mongo mongo;
+
+    @Bean
+    public EventStore eventStore() {
+        return new MongoEventStore(new DefaultMongoTemplate(mongo));
+    }
 
     @Bean
     public CommandBus commandBus() {
@@ -35,13 +43,6 @@ public class AxonConfiguration {
     @Bean
     public EventBus eventBus() {
         return new SimpleEventBus();
-    }
-
-    @Bean
-    public EventStore eventStore() {
-        return new FileSystemEventStore(
-                new SimpleEventFileResolver(new File("./events"))
-        );
     }
 
     @Bean
