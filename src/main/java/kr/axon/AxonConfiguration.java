@@ -13,9 +13,12 @@ import org.axonframework.eventsourcing.EventSourcingRepository;
 import org.axonframework.eventstore.EventStore;
 import org.axonframework.eventstore.mongo.DefaultMongoTemplate;
 import org.axonframework.eventstore.mongo.MongoEventStore;
+import org.axonframework.unitofwork.SpringTransactionManager;
+import org.axonframework.unitofwork.TransactionManager;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.transaction.PlatformTransactionManager;
 
 @Configuration
 @AnnotationDriven
@@ -25,6 +28,14 @@ public class AxonConfiguration {
     @Autowired
     private Mongo mongo;
 
+    @Autowired
+    private PlatformTransactionManager platformTransactionManager;
+
+    @Bean
+    public TransactionManager axonTransactionManager() {
+        return new SpringTransactionManager(platformTransactionManager);
+    }
+
     @Bean
     public EventStore eventStore() {
         return new MongoEventStore(new DefaultMongoTemplate(mongo));
@@ -32,7 +43,9 @@ public class AxonConfiguration {
 
     @Bean
     public CommandBus commandBus() {
-        return new SimpleCommandBus();
+        SimpleCommandBus commandBus = new SimpleCommandBus();
+        commandBus.setTransactionManager(axonTransactionManager());
+        return commandBus;
     }
 
     @Bean

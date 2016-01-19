@@ -3,6 +3,8 @@ package kr.axon.post.command;
 import kr.axon.post.command.domain.PostAggregateRoot;
 import kr.axon.post.command.handler.PostCommandHandler;
 import kr.axon.post.supporter.AbstractPostCommandEventFixture;
+import kr.axon.supporter.FieldInjectSupporter;
+import org.axonframework.repository.Repository;
 import org.axonframework.test.FixtureConfiguration;
 import org.axonframework.test.Fixtures;
 import org.junit.Before;
@@ -15,9 +17,9 @@ public class PostCommandEventTest extends AbstractPostCommandEventFixture {
     @Before
     public void setUp() throws Exception {
         this.fixture = Fixtures.newGivenWhenThenFixture(PostAggregateRoot.class);
-        this.fixture.registerAnnotatedCommandHandler(
-                new PostCommandHandler(fixture.getRepository())
-        );
+        PostCommandHandler postCommandHandler = new PostCommandHandler();
+        FieldInjectSupporter.inject(postCommandHandler, Repository.class, fixture.getRepository());
+        this.fixture.registerAnnotatedCommandHandler(postCommandHandler);
     }
 
     @Test
